@@ -29,10 +29,10 @@ public class DataImport implements ApplicationRunner {
 
         Coupon couponNr1 = new Coupon(null, "WAKACJE_A", 10.0, 10, 0, userOfMagda);
         Coupon couponNr2 = new Coupon(null, "SALE_A", 11.0, 10, 0, userOfMagda);
-        Coupon couponNr3 = new Coupon(null, "SALE_A", 12.0, 10, 0, userOfMagda);
+        Coupon couponNr3 = new Coupon(null, "SALE_X", 12.0, 10, 0, userOfMagda);
         Coupon couponNr4 = new Coupon(null, "WAKACJE_B", 10.0, 10, 0, userOfRobert);
         Coupon couponNr5 = new Coupon(null, "SALE_B", 11.0, 10, 0, userOfRobert);
-        Coupon couponNr6 = new Coupon(null, "SALE_B", 12.0, 10, 0, userOfRobert);
+        Coupon couponNr6 = new Coupon(null, "SALE_Y", 12.0, 10, 0, userOfRobert);
         couponRepository.saveAll(List.of(couponNr1, couponNr2, couponNr3, couponNr4, couponNr5, couponNr6));
     }
 
