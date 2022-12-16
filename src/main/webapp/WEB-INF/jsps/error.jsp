@@ -19,7 +19,8 @@
         <jsp:include page="headerBar.jsp"/>
         <div class="w3-center">
             <p>What a pity...</p>
-            <p>Following problem occured: ${message}</p>
+            <p>Following problem occurred:</p>
+            <p style="color: red"> ${message}</p>
         </div>
 
     </div>

@@ -1,11 +1,11 @@
 package com.fdmgroup.onedayproject.service;
 
-import com.fdmgroup.onedayproject.exception.CouponsExceeded;
+import java.util.List;
+
+import com.fdmgroup.onedayproject.exception.CouponsExceededException;
 import com.fdmgroup.onedayproject.exception.TotalPriceToLowException;
 import com.fdmgroup.onedayproject.model.Coupon;
 import com.fdmgroup.onedayproject.model.User;
-
-import java.util.List;
 
 public interface IUserService {
 
@@ -13,5 +13,5 @@ public interface IUserService {
 
     User getUserDetails(String userName) throws Exception;
 
-    Coupon redeemCouponForUser(String username, String code) throws Exception, CouponsExceeded, TotalPriceToLowException;
+    Coupon redeemCouponForUser(String username, String code) throws Exception, CouponsExceededException, TotalPriceToLowException;
 }

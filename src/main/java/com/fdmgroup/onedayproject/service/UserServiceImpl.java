@@ -1,16 +1,17 @@
 package com.fdmgroup.onedayproject.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.fdmgroup.onedayproject.exception.CouponNotFoundException;
-import com.fdmgroup.onedayproject.exception.CouponsExceeded;
+import com.fdmgroup.onedayproject.exception.CouponsExceededException;
 import com.fdmgroup.onedayproject.exception.TotalPriceToLowException;
 import com.fdmgroup.onedayproject.exception.UserNotFoundException;
 import com.fdmgroup.onedayproject.model.Coupon;
 import com.fdmgroup.onedayproject.model.User;
 import com.fdmgroup.onedayproject.repository.CouponRepository;
 import com.fdmgroup.onedayproject.repository.UserRepository;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -28,14 +29,16 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public User getUserDetails(String userName) throws Exception {
-        return userRepository.findUserByUsernameIgnoreCase(userName).orElseThrow(() -> new Exception("No such user"));
+    public User getUserDetails(String userName) throws UserNotFoundException {
+        return userRepository.findUserByUsernameIgnoreCase(userName).orElseThrow(() -> new UserNotFoundException("No such user", "There is no user " + userName));
     }
 
     @Override
-    public Coupon redeemCouponForUser(String username, String code) throws Exception, CouponsExceeded, TotalPriceToLowException {
-        Coupon coupon = couponRepository.findByUserUsernameIgnoreCaseAndCodeIgnoreCase(username, code).orElseThrow(() -> new CouponNotFoundException("Coupon not found"));
-        User user = userRepository.findUserByUsernameIgnoreCase(username).orElseThrow(() -> new UserNotFoundException("User not found"));
+    public Coupon redeemCouponForUser(String username, String code) throws Exception {
+        Coupon coupon = couponRepository
+            .findByUserUsernameIgnoreCaseAndCodeIgnoreCase(username, code)
+            .orElseThrow(() -> new CouponNotFoundException("Coupon not found", "Coupon with name " + code + " not found"));
+        User user = userRepository.findUserByUsernameIgnoreCase(username).orElseThrow(() -> new UserNotFoundException("User not found", "User " + username + " does not exists"));
         validateIfPossibleToRedeem(user, coupon);
         coupon.setAllowedUsages(coupon.getAllowedUsages() - 1);
         coupon.setCurrentUsages(coupon.getCurrentUsages() + 1);
@@ -46,12 +49,12 @@ public class UserServiceImpl implements IUserService {
 
     }
 
-    private void validateIfPossibleToRedeem(User user, Coupon coupon) throws TotalPriceToLowException, CouponsExceeded {
+    private void validateIfPossibleToRedeem(User user, Coupon coupon) throws TotalPriceToLowException, CouponsExceededException {
         if (user.getTotalPrice() < coupon.getValue()) {
-            throw new TotalPriceToLowException("Total price is too low. Coupon value needs to lower than total price");
+            throw new TotalPriceToLowException("Total price exception", "Total price is too low. Coupon value needs to lower than total price");
         }
         if (coupon.getAllowedUsages() <= 0) {
-            throw new CouponsExceeded("Exceeded allowed coupon usages");
+            throw new CouponsExceededException("Coupon exceeded", "Exceeded allowed coupon usages");
         }
     }
 }

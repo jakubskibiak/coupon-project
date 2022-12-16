@@ -48,7 +48,7 @@
             <label> Provide coupon code:</label>
             <input name="code" placeholder="Code..." />
             <input type="submit"
-                   class="w3-bar-item w3-button w3-khaki w3-mobile" value="Update" style="margin-left:47%; margin-top:25px; border-radius: 15px"/>
+                   class="w3-bar-item w3-button w3-khaki w3-mobile" value="Redeem" style="margin-left:5%; margin-top:25px; border-radius: 15px"/>
 
         </div>
 

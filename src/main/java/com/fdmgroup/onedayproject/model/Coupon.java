@@ -1,8 +1,5 @@
 package com.fdmgroup.onedayproject.model;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,11 +7,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Table(name = "COUPONS"
-//        , uniqueConstraints = { @UniqueConstraint(columnNames = { "code", "users_user_id" }) }
-)
+@Table(name = "COUPONS", uniqueConstraints = { @UniqueConstraint(columnNames = { "code", "user_id" }) })
 public class Coupon {
 
     @Id
@@ -33,6 +32,7 @@ public class Coupon {
 
     public Coupon() {
     }
+
     public Coupon(Integer id, String code, double value, int allowedUsages, int currentUsages, User user) {
         this.id = id;
         this.code = code;

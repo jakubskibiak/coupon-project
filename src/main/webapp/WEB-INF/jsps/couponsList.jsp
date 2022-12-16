@@ -2,7 +2,7 @@
          pageEncoding="ISO-8859-1" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="w3-center">
-  <h1>My Coupons</h1>
+  <h1>Coupons</h1>
 </div>
 
 <table style="margin:auto">

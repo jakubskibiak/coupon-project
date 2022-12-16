@@ -45,7 +45,7 @@
             <label> Provide username:</label>
             <input name="username" placeholder="Username..." />
             <input type="submit"
-                   class="w3-bar-item w3-button w3-khaki w3-mobile" value="Update" style="margin-left:47%; margin-top:25px; border-radius: 15px"/>
+                   class="w3-bar-item w3-button w3-khaki w3-mobile" value="Check details" style="margin-left:5%; margin-top:25px; border-radius: 15px"/>
 
         </div>
 

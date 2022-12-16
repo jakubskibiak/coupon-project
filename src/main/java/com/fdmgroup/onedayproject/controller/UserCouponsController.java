@@ -1,12 +1,7 @@
 package com.fdmgroup.onedayproject.controller;
 
-import com.fdmgroup.onedayproject.exception.CouponNotFoundException;
-import com.fdmgroup.onedayproject.exception.CouponsExceeded;
-import com.fdmgroup.onedayproject.exception.TotalPriceToLowException;
-import com.fdmgroup.onedayproject.exception.UserNotFoundException;
-import com.fdmgroup.onedayproject.model.Coupon;
-import com.fdmgroup.onedayproject.model.User;
-import com.fdmgroup.onedayproject.service.IUserService;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,7 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
+import com.fdmgroup.onedayproject.exception.CouponNotFoundException;
+import com.fdmgroup.onedayproject.exception.CouponsExceededException;
+import com.fdmgroup.onedayproject.exception.DetailedException;
+import com.fdmgroup.onedayproject.exception.TotalPriceToLowException;
+import com.fdmgroup.onedayproject.exception.UserNotFoundException;
+import com.fdmgroup.onedayproject.model.Coupon;
+import com.fdmgroup.onedayproject.model.User;
+import com.fdmgroup.onedayproject.service.IUserService;
 
 @Controller
 public class UserCouponsController {
@@ -45,16 +47,16 @@ public class UserCouponsController {
     }
 
     @PostMapping("/redeem-coupon")
-    public String redeemCoupon(ModelMap model, String username, String code) throws CouponsExceeded, Exception, TotalPriceToLowException {
+    public String redeemCoupon(ModelMap model, String username, String code) throws Exception {
         Coupon coupon = userService.redeemCouponForUser(username, code);
         model.addAttribute("coupon", coupon);
         return "/success";
     }
 
-    @ExceptionHandler({ CouponNotFoundException.class, CouponsExceeded.class, TotalPriceToLowException.class, UserNotFoundException.class })
+    @ExceptionHandler({ CouponNotFoundException.class, CouponsExceededException.class, TotalPriceToLowException.class, UserNotFoundException.class })
     public ModelAndView handleError(Exception ex) {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("message", ex.getMessage());
+        mav.addObject("message", ex instanceof DetailedException ? ((DetailedException) ex).getMessageToDisplay() : ex.getMessage());
         mav.setViewName("error");
         return mav;
     }

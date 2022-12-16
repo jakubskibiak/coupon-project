@@ -10,13 +10,15 @@
     <th>FirstName</th>
     <th>LastName</th>
     <th>Username</th>
+    <th>Email</th>
     <th>Total price</th>
   </tr>
     <tr>
       <td>${userDetails.firstName}</td>
       <td>${userDetails.lastName}</td>
       <td>${userDetails.username}</td>
-      <td>${userDetails.totalPrice}</td>
+      <td>${userDetails.email}</td>
+      <td>${userDetails.totalPrice} EUR</td>
 
     </tr>
 </table>
